@@ -1,7 +1,17 @@
-{% extends 'recipes/recipes-base.html' %}
-{% block title %}Recipes - Home{% endblock %}
-
-{% block navbar %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <!--Load bootstrap via Django -->
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+<header>
+    {% block navbar %}
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Recipes</a>
@@ -14,17 +24,20 @@
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'new-recipe' %}">New Item</a>
+              <a class="nav-link" href="#">New Item</a>
             </li>
               <li class="nav-item">
-              <a class="nav-link" href="{% url 'cookbook' %}">Cookbook</a>
+              <a class="nav-link" href="#">Cookbook</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-{% endblock %}
-
-{% block content %}
-<h1>Welcome to the Online Recipes Website!</h1>
-{% endblock %}
+    {% endblock %}
+</header>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+</body>
+</html>
