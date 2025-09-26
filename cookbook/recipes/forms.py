@@ -4,10 +4,32 @@ from django.forms.models import modelformset_factory
 
 from .models import Recipes, IngredientGroup, Ingredients
 
+class RecipesForm(forms.ModelForm):
+    class Meta:
+        model = Recipes
+        fields = "__all__"
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'category': forms.Select(choices=Recipes.CATEGORY_CHOICES),
+            'time_min': forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}),
+            'time_max': forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}),
+            'serving': forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}),
+            'instructions': forms.Textarea(attrs={'class': 'form-control'}),
+            'notes': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+class IngredientGroupForm(forms.ModelForm):
+    class Meta:
+        model = IngredientGroup
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
 IngredientGroupFormSet = inlineformset_factory(
     Recipes,
     IngredientGroup,
-    fields=['name'],
+    form=IngredientGroupForm,
     extra=1,
     can_delete=True,
 )
