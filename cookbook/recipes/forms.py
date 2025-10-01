@@ -26,14 +26,6 @@ class IngredientGroupForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-IngredientGroupFormSet = inlineformset_factory(
-    Recipes,
-    IngredientGroup,
-    form=IngredientGroupForm,
-    extra=1,
-    can_delete=True,
-)
-
 class IngredientsForm(forms.ModelForm):
     class Meta:
         model = Ingredients
@@ -44,9 +36,10 @@ class IngredientsForm(forms.ModelForm):
             'measurement': forms.ChoiceField(choices=Ingredients.MEASUREMENT_CHOICES),
         }
 
-IngredientsFormSet = modelformset_factory(
+IngredientsFormSet = inlineformset_factory(
+    IngredientGroup,
     Ingredients,
-    IngredientsForm,
+    form=IngredientsForm,
     extra=1,
     can_delete=True,
 )

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import RecipesForm, IngredientGroupFormSet, IngredientsFormSet
+from .forms import RecipesForm, IngredientsFormSet
 from .models import Recipes, IngredientGroup, Ingredients
 
 # Create your views here.
@@ -24,10 +24,8 @@ def new_item(request):
         return render(request, 'recipes/recipes-home.html') #TODO update later
     else:
         recipe_form = RecipesForm()
-        ingredient_group_formset = IngredientGroupFormSet()
         context = {
             'recipe_form': recipe_form,
-            'ingredient_group_formset': ingredient_group_formset,
         }
         return render(request, 'recipes/new-recipe.html', context)
 
