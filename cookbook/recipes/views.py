@@ -60,7 +60,7 @@ def new_ingredient_group(request, recipe_pk):
         ingredient_group_form = IngredientGroupForm()
         ingredient_formset = IngredientsFormSet()
 
-    return render(request, 'recipes/new-ingredient-group.html', {
+    return render(request, 'recipes/ingredient-group.html', {
         'ingredient_group_form': ingredient_group_form,
         'ingredient_formset': ingredient_formset,
     })

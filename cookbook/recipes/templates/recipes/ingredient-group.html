@@ -58,45 +58,87 @@
             </div>
             {% endif %}
         </div>
-        <div class="container">
+        <div class="container" id="ingredients-group">
             {% for form in ingredient_group_formset %}
             <div data-form-index="{{ forloop.counter0 }}">
                 <div class="row">
                     {% for hidden in form.hidden_fields %}
                         {{ hidden }}
                     {% endfor %}
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label class="form-label">Ingredient Name</label>
                         {{ form.ingredient }}
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label class="form-label">Amount</label>
                         {{ form.amount }}
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label class="form-label">Measurement</label>
                         {{ form.measurement }}
                     </div>
                     {% if form.instance.pk %}
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
                             <div class="form-check">
                                 {{ form.DELETE }}
-                                <label for="{{form.DELETE.id_for_label" class="form-check-label text-danger small">Delete</label>
+                                <label for="{{form.DELETE.id_for_label}}" class="form-check-label text-danger small">
+                                    Delete
+                                </label>
                             </div>
                         </div>
                     {% endif %}
                 </div>
             </div>
             {% endfor %}
-
-            <!--Button to add new ingredient-->
-            <button type="button" class="btn btn-outline-primary" id="add-new-ingredient">
-                Add New Ingredient
-            </button>
-
         </div>
+        <!--Button to add new ingredient-->
+        <button type="button" class="btn btn-outline-primary" onclick="addNewIngredient()">Add New Ingredient</button>
         <button type="submit" class="btn btn-primary">Submit</button>
         <a href="{% url 'recipes-home' %}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
+<template id="add-new-ingredient-template">
+    <div data-form-index="__prefix__">
+        <div class="row">
+            <input type="hidden" name="form-__prefix__-id" id="id_form__prefix__-id">
+            <div class="col-md-6 mb-3">
+                <label class="form-label" for="id_form-__prefix__-ingredient">Ingredient Name</label>
+                <input type="text" class="form-control" name="form-__prefix__-ingredient" required id="id_form-__prefix__-ingredient">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label" for="id_form-__prefix__-amount">Amount</label>
+                <input type="text" class="form-control" name="form-__prefix__-amount" required id="id_form-__prefix__-amount">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label" for="id_form-__prefix__-measurement">Measurement</label>
+                <input type="text" class="form-control" name="form-__prefix__-measurement" required id="id_form-__prefix__-measurement">
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    let formIndex = parseInt(document.querySelector('#id_ingredients_set-TOTAL_FORMS').value);
+
+    function addNewIngredient() {
+        const template = document.querySelector('#add-new-ingredient-template');
+        const form = document.querySelector('#ingredients-group');
+
+        if (!template || !form) {
+            console.error("Template or form not found");
+            return;
+        }
+
+        // Create the new ingredient row
+        let template_html = template.innerHTML;
+        template_html = template_html.replace(/__prefix__/g, formIndex);
+        const newRow = document.createElement("div");
+        newRow.innerHTML = template_html;
+        form.appendChild(newRow);
+        console.log('Added new row with index: ', formIndex -1 );
+
+        // Update form count
+        formIndex += 1;
+        document.querySelector('#id_ingredients_set-TOTAL_FORMS').value = formIndex;
+    }
+</script>
 {% endblock %}
