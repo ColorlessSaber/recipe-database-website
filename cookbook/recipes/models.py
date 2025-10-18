@@ -4,7 +4,7 @@ class Recipes(models.Model):
     """
     database for keeping track of recipes
     """
-    CATEGORY_CHOICES = {
+    CATEGORY_CHOICES = (
         ('breakfast', 'breakfast'),
         ('lunch', 'lunch'),
         ('dinner', 'dinner'),
@@ -12,7 +12,7 @@ class Recipes(models.Model):
         ('dessert', 'dessert'),
         ('dressing', 'dressing'),
         ('other', 'other'),
-    }
+    )
 
     name = models.CharField(max_length=255, blank=False, null=False)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=10)
@@ -39,7 +39,7 @@ class Ingredients(models.Model):
     """
     database for keeping track of ingredients for each recipe
     """
-    MEASUREMENT_CHOICES = {
+    MEASUREMENT_CHOICES = (
         ('tsp', 'tsp'),
         ('tbsp', 'tbsp'),
         ('fl oz', 'fl oz'),
@@ -55,11 +55,11 @@ class Ingredients(models.Model):
         ('L', 'L'),
         ('g', 'g'),
         ('kg', 'kg'),
-    }
+    )
 
     group_id = models.ForeignKey(IngredientGroup, on_delete=models.CASCADE)
     ingredient = models.CharField(max_length=255, blank=False, null=False, default='')
-    amount = models.CharField(max_length=10, blank=False, null=False, default='n/a')
+    amount = models.CharField(max_length=10, blank=False, null=False, default='')
     measurement = models.CharField(max_length=7, choices=MEASUREMENT_CHOICES)
 
     objects = models.Manager()

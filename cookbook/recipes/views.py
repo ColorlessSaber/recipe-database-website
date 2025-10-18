@@ -63,6 +63,7 @@ def new_ingredient_group(request, recipe_pk):
     return render(request, 'recipes/ingredient-group.html', {
         'ingredient_group_form': ingredient_group_form,
         'ingredient_formset': ingredient_formset,
+        'measurements': Ingredients.MEASUREMENT_CHOICES,
     })
 
 def cookbook(request):

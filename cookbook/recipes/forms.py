@@ -1,6 +1,5 @@
 from django import forms
 from django.forms import inlineformset_factory
-from django.forms.models import modelformset_factory
 
 from .models import Recipes, IngredientGroup, Ingredients
 
@@ -33,7 +32,7 @@ class IngredientsForm(forms.ModelForm):
         widgets = {
             'ingredient': forms.TextInput(attrs={'class': 'form-control'}),
             'amount': forms.TextInput(attrs={'class': 'form-control'}),
-            'measurement': forms.ChoiceField(choices=Ingredients.MEASUREMENT_CHOICES),
+            'measurement': forms.Select(choices=Ingredients.MEASUREMENT_CHOICES),
         }
 
 IngredientsFormSet = inlineformset_factory(
@@ -42,4 +41,5 @@ IngredientsFormSet = inlineformset_factory(
     form=IngredientsForm,
     extra=1,
     can_delete=True,
+    validate_min=True,
 )
