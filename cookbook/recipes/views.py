@@ -23,9 +23,9 @@ def new_item(request):
     if request.method == "POST":
         recipe_form = RecipesForm(request.POST)
         if recipe_form.is_valid():
-            #new_recipe = recipe_form.save() # TODO will uncomment once new ingredient group works
-            new_recipe_pk = 1
-            return redirect('new-ingredient-group', recipe_pk=new_recipe_pk)
+            #new_recipe = recipe_form.save()
+            foo = 1
+            return redirect('new-ingredient-group', recipe_pk=foo)
         else:
             messages.error(request, 'Invalid form was submitted. Please try again.')
     else:
@@ -45,7 +45,7 @@ def new_ingredient_group(request, recipe_pk):
     :param recipe_pk: The primary key of the recipe that the new ingredient group will be associated with.
     :return:
     """
-    #recipe = get_object_or_404(Recipes, pk=recipe_pk) # TODO will uncomment once new ingredient group works
+    #recipe = get_object_or_404(Recipes, pk=recipe_pk) # TODO look into get the name of the recipe and adding it to the HTML view
     if request.method == "POST":
         ingredient_group_form = IngredientGroupForm(request.POST)
         ingredient_formset = IngredientsFormSet(request.POST)
@@ -55,7 +55,7 @@ def new_ingredient_group(request, recipe_pk):
             print("new ingredient group saved")
             return redirect("recipes-home")
         else:
-            messages.error(request, 'Invalid form was submitted. Please try again.')
+            messages.error(request, 'Invalid form was submitted. Please validate all entry(s) have been filled/selected, and then try again.')
     else:
         ingredient_group_form = IngredientGroupForm()
         ingredient_formset = IngredientsFormSet()
