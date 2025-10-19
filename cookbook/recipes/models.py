@@ -31,7 +31,7 @@ class IngredientGroup(models.Model):
     one variation of the dish and a different variation, etc.
     """
     name = models.CharField(max_length=255, blank=False, null=False)
-    recipe_id = models.ForeignKey(Recipes, on_delete=models.CASCADE)
+    recipe_ref = models.ForeignKey(Recipes, on_delete=models.CASCADE)
 
     objects = models.Manager()
 
@@ -57,7 +57,7 @@ class Ingredients(models.Model):
         ('kg', 'kg'),
     )
 
-    group_id = models.ForeignKey(IngredientGroup, on_delete=models.CASCADE)
+    group_ref = models.ForeignKey(IngredientGroup, on_delete=models.CASCADE)
     ingredient = models.CharField(max_length=255, blank=False, null=False, default='')
     amount = models.CharField(max_length=10, blank=False, null=False, default='')
     measurement = models.CharField(max_length=7, choices=MEASUREMENT_CHOICES)

@@ -31,7 +31,7 @@ def new_recipe(request):
                 with transaction.atomic():
                     recipe = recipe_form.save()
 
-                    ingredient_group_form.instance.recipe_id = recipe
+                    ingredient_group_form.instance.recipe_ref = recipe
                     ingredient_group = ingredient_group_form.save()
 
                     ingredient_formset.instance = ingredient_group

@@ -111,16 +111,6 @@
                             <label class="form-label">Measurement</label>
                             {{ form.measurement }}
                         </div>
-                        {% if form.instance.pk %}
-                            <div class="col-md-4 mb-3">
-                                <div class="form-check">
-                                    {{ form.DELETE }}
-                                    <label for="{{form.DELETE.id_for_label}}" class="form-check-label text-danger small">
-                                        Delete
-                                    </label>
-                                </div>
-                            </div>
-                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
