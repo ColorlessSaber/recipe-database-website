@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import RecipesForm, IngredientsFormSet, IngredientsForm, IngredientGroupForm
-from .models import Recipes, IngredientGroup, Ingredients
+from django.db import transaction
+from .forms import RecipesForm, IngredientsFormSet,  IngredientGroupForm
+from .models import Ingredients
 
 # Create your views here.
 def home(request):
@@ -13,7 +14,7 @@ def home(request):
     """
     return render(request, 'recipes/recipes-home.html')
 
-def new_item(request):
+def new_recipe(request):
     """
     Creates a new recipe.
 
@@ -21,46 +22,34 @@ def new_item(request):
     :return:
     """
     if request.method == "POST":
-        recipe_form = RecipesForm(request.POST)
-        if recipe_form.is_valid():
-            #new_recipe = recipe_form.save()
-            foo = 1
-            return redirect('new-ingredient-group', recipe_pk=foo)
+        recipe_form = RecipesForm(request.POST, prefix="recipe_form")
+        ingredient_group_form = IngredientGroupForm(request.POST, prefix="ingredient_group_form")
+        ingredient_formset = IngredientsFormSet(request.POST, prefix="ingredient_formset")
+
+        if recipe_form.is_valid() and ingredient_formset.is_valid() and ingredient_group_form.is_valid():
+            try:
+                with transaction.atomic():
+                    recipe = recipe_form.save()
+
+                    ingredient_group_form.instance.recipe_id = recipe
+                    ingredient_group = ingredient_group_form.save()
+
+                    ingredient_formset.instance = ingredient_group
+                    ingredient_formset.save()
+
+                messages.success(request, f'Recipe {recipe.name} has been saved successfully!')
+                return redirect("recipes-home")
+            except Exception as e:
+                messages.error(request, f'There was an error when saving recipe: {e}')
         else:
             messages.error(request, 'Invalid form was submitted. Please try again.')
     else:
-        recipe_form = RecipesForm()
+        recipe_form = RecipesForm(prefix="recipe_form")
+        ingredient_group_form = IngredientGroupForm(prefix="ingredient_group_form")
+        ingredient_formset = IngredientsFormSet(prefix="ingredient_formset")
 
     return render(request, 'recipes/new-recipe.html', {
         'recipe_form': recipe_form,
-    })
-
-def new_ingredient_group(request, recipe_pk):
-    """
-    Creates a new ingredient group with associated ingredients and links the group to the recipe.
-
-    This function adds a new ingredient groups to existing and new recipes.
-
-    :param request:
-    :param recipe_pk: The primary key of the recipe that the new ingredient group will be associated with.
-    :return:
-    """
-    #recipe = get_object_or_404(Recipes, pk=recipe_pk) # TODO look into get the name of the recipe and adding it to the HTML view
-    if request.method == "POST":
-        ingredient_group_form = IngredientGroupForm(request.POST)
-        ingredient_formset = IngredientsFormSet(request.POST)
-        if ingredient_formset.is_valid() and ingredient_group_form.is_valid():
-            #new_ingredient_group = ingredient_formset.save(commit=False)
-            # TODO finish this section once screen is working
-            print("new ingredient group saved")
-            return redirect("recipes-home")
-        else:
-            messages.error(request, 'Invalid form was submitted. Please validate all entry(s) have been filled/selected, and then try again.')
-    else:
-        ingredient_group_form = IngredientGroupForm()
-        ingredient_formset = IngredientsFormSet()
-
-    return render(request, 'recipes/ingredient-group.html', {
         'ingredient_group_form': ingredient_group_form,
         'ingredient_formset': ingredient_formset,
         'measurements': Ingredients.MEASUREMENT_CHOICES,
