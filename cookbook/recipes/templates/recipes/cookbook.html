@@ -26,5 +26,41 @@
 {% endblock %}
 
 {% block content %}
-<h1>Cookbook Overview</h1>
+<div class="container">
+    <h1>Cookbook Overview</h1>
+    <p>Select "All" to reset the filter selection.</p>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="filter">Category Filter:</label>
+        <select name="filter" id="filter">
+            <option value="all" selected>All</option>
+            {% for value, view in list_of_categories %}
+            <option value="{{ value }}">{{ view }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Recipe Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Servings</th>
+                    <th scope="col">Max Time (mins)</th>
+                    <th scope="col">Open Recipe</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recipe in recipes %}
+                <tr>
+                    <td>{{ recipe.name }}</td>
+                    <td>{{ recipe.category }}</td>
+                    <td>{{ recipe.servings }}</td>
+                    <td>{{ recipe.time_max }}</td>
+                    <td><a><button type="button" class="btn btn-secondary">Open</button></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
 {% endblock %}

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db import transaction
 from .forms import RecipesForm, IngredientsFormSet,  IngredientGroupForm
-from .models import Ingredients
+from .models import Ingredients, Recipes
 
 # Create your views here.
 def home(request):
@@ -57,9 +57,23 @@ def new_recipe(request):
 
 def cookbook(request):
     """
-    Opens the webpage showing everything in the cookbook.
+    Opens the webpage showing everything in the cookbook--IE, all the recipes that
+    are saved in the database.
 
     :param request:
     :return:
     """
-    return render(request, 'recipes/cookbook.html')
+    list_of_categories = Recipes.CATEGORY_CHOICES
+
+    if request.method == "POST":
+        if request.POST.get("filter") != "all":
+            recipes = Recipes.objects.filter(category=request.POST.get("filter")).order_by("name")
+        else:
+            recipes = Recipes.objects.all().order_by("name")
+    else:
+        recipes = Recipes.objects.all().order_by("name")
+
+    return render(request, 'recipes/cookbook.html', {
+        'list_of_categories': list_of_categories,
+        'recipes': recipes,
+    })
