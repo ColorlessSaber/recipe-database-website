@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db import transaction
 from .forms import RecipesForm, IngredientsFormSet,  IngredientGroupForm
-from .models import Ingredients, Recipes
+from .models import Ingredients, Recipes, IngredientGroup
+
 
 # Create your views here.
 def home(request):
@@ -76,4 +77,18 @@ def cookbook(request):
     return render(request, 'recipes/cookbook.html', {
         'list_of_categories': list_of_categories,
         'recipes': recipes,
+    })
+
+def recipe_details(request, recipe_id):
+    """
+    Loads the details of an individual recipe along with the ingredient group(s) and the ingredients per group.
+
+    :param request:
+    :param recipe_id: The id of the recipe user wishes to see
+    :return:
+    """
+    recipe = get_object_or_404(Recipes, id=recipe_id)
+
+    return render(request, 'recipes/recipe-details.html', {
+        'recipe': recipe,
     })

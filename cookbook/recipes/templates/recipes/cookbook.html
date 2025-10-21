@@ -1,5 +1,5 @@
 {% extends 'recipes/recipes-base.html' %}
-{% block title %}Recipes - New Item{% endblock %}
+{% block title %}Cookbook{% endblock %}
 
 {% block navbar %}
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -56,7 +56,7 @@
                     <td>{{ recipe.category }}</td>
                     <td>{{ recipe.servings }}</td>
                     <td>{{ recipe.time_max }}</td>
-                    <td><a><button type="button" class="btn btn-secondary">Open</button></a></td>
+                    <td><a href="{% url 'recipe-details' recipe_id=recipe.pk %}"><button type="button" class="btn btn-secondary">Open</button></a></td>
                 </tr>
                 {% endfor %}
             </tbody>

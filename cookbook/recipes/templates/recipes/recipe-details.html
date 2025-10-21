@@ -1,0 +1,111 @@
+{% extends 'recipes/recipes-base.html' %}
+{% block title %}Recipe Details{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Recipes</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="{% url 'recipes-home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'new-recipe' %}">New Item</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="{% url 'cookbook' %}">Cookbook</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+<div class="container mb-3">
+    <h1>Recipe {{recipe.name}}</h1>
+    <div class="container">
+        <div class="mb-3 px-5">
+            <p class="fw-bold text-decoration-underline">Name:</p>
+            {{recipe.name}}
+        </div>
+        <div class="mb-3 px-5">
+            <p class="fw-bold text-decoration-underline">Category:</p>
+            {{recipe.category}}
+        </div>
+        <div class="mb-3 px-5">
+            <p class="fw-bold text-decoration-underline">Time Min (mins):</p>
+            {{recipe.time_min}}
+        </div>
+        <div class="mb-3 px-5">
+            <p class="fw-bold text-decoration-underline">Time Max (mins):</p>
+            {{recipe.time_max}}
+        </div>
+        <div class="mb-3 px-5">
+            <p class="fw-bold text-decoration-underline">Servings:</p>
+            {{recipe.servings}}
+        </div>
+        <div class="mb-3 px-5">
+            <p class="fw-bold text-decoration-underline">Instructions:</p>
+            {{recipe.instructions}}
+        </div>
+        <div class="mb-3 px-5">
+            <p class="fw-bold text-decoration-underline">Notes:</p>
+            {{recipe.notes}}
+        </div>
+    </div>
+    <!-- Ingredient Group(s) with their respective ingredients-->
+    <div class="container">
+        <h4 class="border-top mb-3">Ingredient Groups</h4>
+        <div class="accordion accordion-flush" id="ingredientGroups">
+            {% for ingredient_group in recipe.ingredient_groups.all %}
+            <div class="accordion-item">
+                <h2 class="accordion-header border">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ingredient_group.pk}}" aria-expanded="false" aria-controls="collapse{{ingredient_group.pk}}">
+                        {{ingredient_group.name}}
+                    </button>
+                </h2>
+                <div id="collapse{{ingredient_group.pk}}" class="accordion-collapse collapse border" data-bs-parent="#ingredientGroups">
+                    <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+                            {% for ingredient in ingredient_group.ingredients.all %}
+                            <li class="list-group-item">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="fw-bold text-decoration-underline">Ingredient Name</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="fw-bold text-decoration-underline">Amount</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="fw-bold text-decoration-underline">Measurement</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            {{ingredient.ingredient}}
+                                        </div>
+                                        <div class="col">
+                                            {{ingredient.amount}}
+                                        </div>
+                                        <div class="col">
+                                            {{ingredient.measurement}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
