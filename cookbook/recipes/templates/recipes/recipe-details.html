@@ -1,5 +1,5 @@
 {% extends 'recipes/recipes-base.html' %}
-{% block title %}Recipe Details{% endblock %}
+{% block title %}Recipes - Recipe {{recipe.name}} Details{% endblock %}
 
 {% block navbar %}
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -27,8 +27,18 @@
 
 {% block content %}
 <div class="container mb-3">
-    <h1>Recipe {{recipe.name}}</h1>
-    <div class="container">
+    <h1>Recipe for: {{recipe.name}}</h1>
+    <!-- Post any message if any -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }} alert-light fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!-- Recipe details section -->
+    <div class="container mb-3">
         <div class="mb-3 px-5">
             <p class="fw-bold text-decoration-underline">Name:</p>
             {{recipe.name}}
@@ -57,6 +67,12 @@
             <p class="fw-bold text-decoration-underline">Notes:</p>
             {{recipe.notes}}
         </div>
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'edit-recipe' recipe_id=recipe.pk %}" class="btn btn-warning">Edit</a>
+                <a class="btn btn-danger">Delete</a>
+            </div>
+        </div>
     </div>
     <!-- Ingredient Group(s) with their respective ingredients-->
     <div class="container">
@@ -71,6 +87,12 @@
                 </h2>
                 <div id="collapse{{ingredient_group.pk}}" class="accordion-collapse collapse border" data-bs-parent="#ingredientGroups">
                     <div class="accordion-body">
+                        <div class="row">
+                            <div class="col">
+                                <a class="btn btn-warning">Edit</a>
+                                <a class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
                         <ul class="list-group list-group-flush">
                             {% for ingredient in ingredient_group.ingredients.all %}
                             <li class="list-group-item">

@@ -92,3 +92,24 @@ def recipe_details(request, recipe_id):
     return render(request, 'recipes/recipe-details.html', {
         'recipe': recipe,
     })
+
+def edit_recipe(request, recipe_id):
+    """
+    Opens webpage to allow user to edit the selected recipe.
+
+    :param request:
+    :param recipe_id: The id of the recipe user wishes to edit
+    :return:
+    """
+    recipe = get_object_or_404(Recipes, id=recipe_id)
+    if request.method == "POST":
+        recipe_form = RecipesForm(request.POST, prefix="recipe_form", instance=recipe)
+        recipe = recipe_form.save()
+        messages.success(request, f'Recipe {recipe.name} has been saved successfully!')
+        return redirect('recipe-details', recipe_id=recipe_id)
+    else:
+        recipe_form = RecipesForm(instance=recipe, prefix="recipe_form")
+        return render(request, 'recipes/edit-recipe.html', {
+            'recipe': recipe,
+            'recipe_form': recipe_form,
+        })
