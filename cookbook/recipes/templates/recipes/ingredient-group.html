@@ -1,5 +1,5 @@
 {% extends 'recipes/recipes-base.html' %}
-{% block title %}Recipes - New Ingredient Group{% endblock %}
+{% block title %}Recipes - {% if edit_html %} Edit {% else %} New {% endif %} Ingredient Group{% endblock %}
 
 {% block navbar %}
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -27,7 +27,7 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="px-5">Add new ingredient group for (recipe name)</h1>
+    <h1 class="px-5">{% if edit_html %} Edit {% else %} New {% endif %} Ingredient Group for Recipe {{recipe.name}}</h1>
     {% if messages %}
         {% for message in messages %}
             <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
@@ -49,6 +49,7 @@
         </div>
         <div class="container">
             <h4 class="border-top mb-3">Ingredients</h4>
+            <button type="button" class="btn btn-outline-primary" onclick="addNewIngredient()">Add New Ingredient</button>
             {{ ingredient_formset.management_form }}
 
             <!--For displaying errors if any-->
@@ -65,20 +66,20 @@
                         {% for hidden in form.hidden_fields %}
                             {{ hidden }}
                         {% endfor %}
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label class="form-label">Ingredient Name</label>
                             {{ form.ingredient }}
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label class="form-label">Amount</label>
                             {{ form.amount }}
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label class="form-label">Measurement</label>
                             {{ form.measurement }}
                         </div>
                         {% if form.instance.pk %}
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <div class="form-check">
                                     {{ form.DELETE }}
                                     <label for="{{form.DELETE.id_for_label}}" class="form-check-label text-danger small">
@@ -93,28 +94,27 @@
             </div>
         </div>
         <!--Button to add new ingredient-->
-        <button type="button" class="btn btn-outline-primary" onclick="addNewIngredient()">Add New Ingredient</button>
         <button type="submit" class="btn btn-primary">Submit</button>
-        <a href="{% url 'recipes-home' %}" class="btn btn-secondary">Cancel</a>
+        <a href="{% url 'recipe-details' recipe_id=recipe.pk %}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 <!-- Template for new ingredient -->
 <template id="add-new-ingredient-template">
     <div class="formset-row" data-form-index="__prefix__">
         <div class="row">
-            <input type="hidden" name="ingredients_set-__prefix__-id" id="id_ingredients_set-__prefix__-id">
-            <input type="hidden" name="ingredients_set-__prefix__-group-id" id="id_ingredients_set-__prefix__-group-id">
-            <div class="col-md-4 mb-3">
+            <input type="hidden" name="ingredient_formset-__prefix__-id" id="id_ingredient_formset-__prefix__-id">
+            <input type="hidden" name="ingredient_formset-__prefix__-group-id" id="id_ingredient_formset-__prefix__-group-id">
+            <div class="col-md-3 mb-3">
                 <label class="form-label">Ingredient Name</label>
-                <input type="text" name="ingredients_set-__prefix__-ingredient" class="form-control" maxlength="255" id="ingredients_set-__prefix__-ingredient">
+                <input type="text" name="ingredient_formset-__prefix__-ingredient" class="form-control" maxlength="255" id="id_ingredient_formset-__prefix__-ingredient">
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-3 mb-3">
                 <label class="form-label">Amount</label>
-                <input type="text" name="ingredients_set-__prefix__-amount" class="form-control"  maxlength="10" id="id_ingredients_set-__prefix__-amount">
+                <input type="text" name="ingredient_formset-__prefix__-amount" class="form-control"  maxlength="10" id="id_ingredient_formset-__prefix__-amount">
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-3 mb-3">
                 <label class="form-label">Measurement</label>
-                <select name="ingredients_set-__prefix__-measurement" required id="id_ingredients_set-__prefix__-measurement">
+                <select name="ingredient_formset-__prefix__-measurement" id="id_ingredient_formset-__prefix__-measurement">
                     <option value selected>---------</option>
                     {% for value, display in measurements %}
                     <option value="{{ value }}">{{ display }}</option>
@@ -125,7 +125,7 @@
     </div>
 </template>
 <script>
-    let formIndex = parseInt(document.querySelector('#id_ingredients_set-TOTAL_FORMS').value);
+    let formIndex = parseInt(document.querySelector('#id_ingredient_formset-TOTAL_FORMS').value);
 
     function addNewIngredient() {
         const emptyIngredientFormTemplate = document.querySelector('#add-new-ingredient-template');
