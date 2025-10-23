@@ -70,7 +70,7 @@
         <div class="row">
             <div class="col">
                 <a href="{% url 'edit-recipe' recipe_id=recipe.pk %}" class="btn btn-warning">Edit</a>
-                <a class="btn btn-danger">Delete</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#recipeDemoPopUp">Delete</button>
             </div>
         </div>
     </div>
@@ -128,6 +128,25 @@
                 </div>
             </div>
             {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Recipe Demo popup -->
+<div class="modal fade" id="recipeDemoPopUp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="recipeDemoPopUpLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recipeDemoPopUpLabel">Delete Recipe Conformation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this recipe ({{recipe.name}})?</p>
+                <p>All associated ingredient Group(s) will be deleted; this cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete-recipe' recipe_id=recipe.pk %}" class="btn btn-primary">Delete</a>
+            </div>
         </div>
     </div>
 </div>

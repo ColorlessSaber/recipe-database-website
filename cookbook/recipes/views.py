@@ -38,7 +38,7 @@ def new_recipe(request):
                     ingredient_formset.instance = ingredient_group
                     ingredient_formset.save()
 
-                messages.success(request, f'Recipe {recipe.name} has been saved successfully!')
+                messages.success(request, f'Recipe {recipe.name} has been successfully saved!')
                 return redirect("recipes-home")
             except Exception as e:
                 messages.error(request, f'There was an error when saving recipe: {e}')
@@ -105,7 +105,7 @@ def edit_recipe(request, recipe_id):
     if request.method == "POST":
         recipe_form = RecipesForm(request.POST, prefix="recipe_form", instance=recipe)
         recipe = recipe_form.save()
-        messages.success(request, f'Recipe {recipe.name} has been saved successfully!')
+        messages.success(request, f'Recipe {recipe.name} has been successfully saved!')
         return redirect('recipe-details', recipe_id=recipe_id)
     else:
         recipe_form = RecipesForm(instance=recipe, prefix="recipe_form")
@@ -113,3 +113,16 @@ def edit_recipe(request, recipe_id):
             'recipe': recipe,
             'recipe_form': recipe_form,
         })
+
+def delete_recipe(request, recipe_id):
+    """
+    Deletes an individual recipe from the database.
+
+    :param request:
+    :param recipe_id: The id of the recipe user wishes to delete
+    :return:
+    """
+    recipe = get_object_or_404(Recipes, id=recipe_id)
+    recipe.delete()
+    messages.success(request, f'Recipe {recipe.name} has been successfully deleted!')
+    return redirect('recipes-home')
