@@ -1,4 +1,5 @@
 {% extends 'recipes/recipes-base.html' %}
+{% load static %}
 {% block title %}Recipes - Home{% endblock %}
 
 {% block navbar %}
@@ -14,7 +15,7 @@
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'new-recipe' %}">New Item</a>
+              <a class="nav-link" href="{% url 'new-recipe' %}">New Recipe</a>
             </li>
               <li class="nav-item">
               <a class="nav-link" href="{% url 'cookbook' %}">Cookbook</a>
@@ -27,7 +28,7 @@
 
 {% block content %}
 <div class="container">
-    <h1>Welcome to the Online Recipes Website!</h1>
+    <h1 class="text-center">Welcome to the Online Recipes Website!</h1>
     <!-- Post any message if any -->
     {% if messages %}
         {% for message in messages %}
@@ -37,5 +38,6 @@
             </div>
         {% endfor %}
     {% endif %}
+    <img src="{% static 'recipes/img/cooking_counter.jpg' %}" class="img-fluid" alt="Photo of ingredients on counter">
 </div>
 {% endblock %}
