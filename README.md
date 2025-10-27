@@ -21,7 +21,7 @@
         <li><a href="#about-the-repo">About The Repo</a></li>
         <li><a href="#built-with">Built With</a></li>
         <li><a href="#getting-started">Getting Started</a></li>
-        <li><a href="#build-and-test">Build And Test</a></li>
+        <li><a href="#Using">Using</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="#acknowledgments">Acknowledgments</a></li>
     </ol>
@@ -29,7 +29,11 @@
 <br>
 
 # About the Repo
-TBD
+A personal project to create a local website to store recipes. The main goal was to allow someone to save a recipe they
+like and be able to search for it again.<br>
+Each recipe is given a tag that categorizes it--breakfast, lunch, dinner, snack, etc. And each recipe can have
+multiple Ingredient Groups, a way to organize the ingredients to into separate groups (EX: the main dish versus the dressing)
+and/or create an Ingredient Group that uses different ingredients than the recipe. 
 
 <p style="text-align:right">(<a href="#readme-top">Back To Top</a>)</p>
 
@@ -38,18 +42,59 @@ TBD
 * [![django][django-shield]][django-url]
 * [![Bootstrap][bootstrap-shield]][bootstrap-url]
 * [![HTML5][html-shield]][html-url]
-* [![CSS][css-shield]][css-url]
+* [![JavaScript][javascript-shield]][javascript-url]
 <!--* [![JavaScript][javascript-shield]][javascript-url]-->
 
 <p style="text-align:right">(<a href="#readme-top">Back To Top</a>)</p>
 
 # Getting Started
-TBD
+Download a copy of the repo to your local computer. Next delete the db.sqlite3 and everything inside
+recipes/migrations folder except the \_\_init__.py file. Run the following commands, in the order given, in the terminal 
+to regenerate the sqlite database and the migrations.<br>
+**NOTE** Make sure you are in the cookbook project directory given we will need to use the manage.py file.
+<br><br>
+ ``
+python manage.py makemigrations
+ ``
+<br>
+``
+python manage.py migrate
+``
+<br><br>
+With the sqlite database and the migrations created, we can now run the following command to start the server.
+<br><br>
+``
+python manage.py runserver
+``
 
 <p style="text-align:right">(<a href="#readme-top">Back To Top</a>)</p>
 
-# Build and Test
-TBD
+# Using
+## Creating a new Recipe
+Select the "new recipe" on the navbar.
+<img src="images/new_recipe_01.png">
+<br>
+Next fill the form for the recipe, ingredient group, and the ingredients part of the group. Please note that you will
+need at lest one ingredient in the ingredient group to be allowed to save the form. When you are finished, click the
+"submit" button
+<img src="images/new_recipe_02.png">
+<img src="images/new_recipe_03.png">
+
+## Seeing all Recipes
+Select the "Cookbook" on the navbar.
+<img src="images/cookbook_01.png">
+<br>
+You can use the filer to view only recipes of a specific category--lunch, dinner, etc. Once you find the recipe you wish to view simple
+click the open button.
+<img src="images/cookbook_02.png">
+
+## Viewing / Editing Existing Recipe
+With a selected recipe open, you can edit the recipe details (green box), any edit an ingredient group (blue box),
+or create a new ingredient group via the "new group" button (pink arrow).<br>
+You can also delete the recipe, which in turn deletes all ingredient group(s) associated with the recipe or delete one
+ingredient group. Please note that each recipe must have at lest one ingredient group; the website will inform you of
+this.
+<img src="images/recipe_details_01.png">
 
 <p style="text-align:right">(<a href="#readme-top">Back To Top</a>)</p>
 
