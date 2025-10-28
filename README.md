@@ -72,21 +72,21 @@ python manage.py runserver
 # Using
 ## Creating a new Recipe
 Select the "new recipe" on the navbar.
-<img src="images/new_recipe_01.png">
+<img src="readme_images/new_recipe_01.png">
 <br>
 Next fill the form for the recipe, ingredient group, and the ingredients part of the group. Please note that you will
 need at lest one ingredient in the ingredient group to be allowed to save the form. When you are finished, click the
 "submit" button
-<img src="images/new_recipe_02.png">
-<img src="images/new_recipe_03.png">
+<img src="readme_images/new_recipe_02.png">
+<img src="readme_images/new_recipe_03.png">
 
 ## Seeing all Recipes
 Select the "Cookbook" on the navbar.
-<img src="images/cookbook_01.png">
+<img src="readme_images/cookbook_01.png">
 <br>
 You can use the filer to view only recipes of a specific category--lunch, dinner, etc. Once you find the recipe you wish to view simple
 click the open button.
-<img src="images/cookbook_02.png">
+<img src="readme_images/cookbook_02.png">
 
 ## Viewing / Editing Existing Recipe
 With a selected recipe open, you can edit the recipe details (green box), any edit an ingredient group (blue box),
@@ -94,7 +94,7 @@ or create a new ingredient group via the "new group" button (pink arrow).<br>
 You can also delete the recipe, which in turn deletes all ingredient group(s) associated with the recipe or delete one
 ingredient group. Please note that each recipe must have at lest one ingredient group; the website will inform you of
 this.
-<img src="images/recipe_details_01.png">
+<img src="readme_images/recipe_details_01.png">
 
 <p style="text-align:right">(<a href="#readme-top">Back To Top</a>)</p>
 
