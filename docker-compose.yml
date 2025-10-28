@@ -14,7 +14,7 @@ services:
     container_name: recipe-website-container
     ports:
       - "8001:8000"
-    command: python cookbook/manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app # sync the host directory to the working directory
 

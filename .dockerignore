@@ -1,8 +1,14 @@
+# Project folder specific file/folder
+readme_images/
+README.md
+
+# Apple Computer
+.DS_Store
+
 # Git
 .git
 .gitignore
 .gitattributes
-
 
 # CI
 .codeclimate.yml
@@ -87,6 +93,3 @@ venv/
 
 # VS Code
 .vscode/
-
-# Apple Computer
-.DS_Store
