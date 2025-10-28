@@ -1,4 +1,4 @@
-FROM python:3.13.9-alpine
+FROM python:3.13.9-slim
 
 # Prevents Django from writing .pyc files inside the container
 ENV PYTHONDONTWRITEBYECODE=1
@@ -6,7 +6,7 @@ ENV PYTHONDONTWRITEBYECODE=1
 # Sends locks to the container console without buffering
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /app
+WORKDIR /code
 
 COPY requirements.txt .
 
@@ -16,5 +16,3 @@ RUN pip install -r requirements.txt
 COPY . .
 
 EXPOSE 8000
-
-CMD ["python", "cookbook/manage.py", "runserver", "0.0.0.0:8000"]
