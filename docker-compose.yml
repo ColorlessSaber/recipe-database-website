@@ -1,0 +1,10 @@
+name: recipe-database-website
+
+services:
+  app:
+    image: recipe-website
+    container_name: recipe-website-container
+    ports:
+      - "8001:8000"
+    volumes:
+      - .:/app # sync the host directory to the working directory

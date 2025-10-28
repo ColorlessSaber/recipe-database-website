@@ -1,0 +1,5 @@
+# Files to ignore for Docker image
+.env
+venv/
+Dockerfile
+.DS_Store
