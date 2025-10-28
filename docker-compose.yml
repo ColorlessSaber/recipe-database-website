@@ -1,7 +1,14 @@
 name: recipe-database-website
 
 services:
-  web: # The name of the service that will host the website
+  db: # the name of the service that will host the SQL database
+    image: postgres:14
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/ # create a location to save the SQL data when the container is down
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+  django-web: # The name of the service that will host the website
     build: .
     image: recipe-website
     container_name: recipe-website-container
@@ -10,3 +17,6 @@ services:
     command: python cookbook/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app # sync the host directory to the working directory
+
+volumes:
+  postgres_data:
