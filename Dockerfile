@@ -40,5 +40,11 @@ ENV PYTHONUNBUFFERED=1
 # switch to non-root user
 USER appuser
 
+# Prep the website
+#RUN python manage.py collectstatic --no-input
+RUN python manage.py migrate --no-input
+
 # Expose the Django port
 EXPOSE 8000
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

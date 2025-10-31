@@ -3,20 +3,35 @@ name: recipe-database-website
 services:
   db: # the name of the service that will host the SQL database
     image: postgres:14
+    container_name: recipe-postgres-container
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/ # create a location to save the SQL data when the container is down
-    environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
+    env_file:
+      - "prod.env"
+    networks:
+      - recipe_network
 
-  django-web: # The name of the service that will host the website
+  web: # The name of the service that will host the website
     build: .
     image: recipe-website
     container_name: recipe-website-container
     ports:
       - "8001:8000"
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app # sync the host directory to the working directory
+    depends_on:
+      - db
+    env_file:
+      - "prod.env"
+    networks:
+      - recipe_network
 
 volumes:
   postgres_data:
+
+# Create an isolated network for the containers that are part of this Docker Compose.
+networks:
+  recipe_network:
+    driver: bridge

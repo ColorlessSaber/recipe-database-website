@@ -13,7 +13,7 @@ from .base import *
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4g6c6^kzr60nt6a1&5aspz4#4v-@1+dc&*vxe+)un688a^pr6m'
+SECRET_KEY = 'django-insecure-dev-key-change-this-for-production'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
