@@ -2,7 +2,7 @@ name: recipe-database-website
 
 services:
   db:
-    image: postgres:15-alpine
+    image: postgres:14.5-alpine
     container_name: recipe-postgres-container
     ports:
       - "5432:5432"
@@ -12,11 +12,15 @@ services:
       - "prod.env"
     networks:
       - recipe_network
+    restart: unless-stopped
 
   web:
     build: .
+    image: recipe-website
     container_name: recipe-website-container
-    command: gunicorn --bind 0.0.0.0:8000 --workers=3 cookbook.wsgi:application
+    # Commands to start website and migrate data are here for if they are in the Dockerfile the tables won't be generated
+    # and the container won't spin up
+    command: bash -c "python manage.py migrate --no-input && gunicorn --bind 0.0.0.0:8000 --workers=3 cookbook.wsgi:application"
     volumes:
       - .:/app
       - recipe_static_volume:/app/staticfiles
@@ -33,7 +37,6 @@ services:
     container_name: recipe-frontend-container
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - recipe_static_volume:/app/staticfiles:ro

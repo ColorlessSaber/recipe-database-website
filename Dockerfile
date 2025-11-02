@@ -42,7 +42,6 @@ USER appuser
 
 # Prep the website
 RUN python manage.py collectstatic --no-input
-RUN python manage.py migrate --no-input
 
 # Set permissions for static files
 RUN chmod -R 755 /app/staticfiles
