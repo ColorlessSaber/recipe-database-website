@@ -1,25 +1,24 @@
 name: recipe-database-website
 
 services:
-  db: # the name of the service that will host the SQL database
+  db:
     image: postgres:15-alpine
     container_name: recipe-postgres-container
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data/ # create a location to save the SQL data when the container is down
+      - postgres_data:/var/lib/postgresql/data/
     env_file:
       - "prod.env"
     networks:
       - recipe_network
 
-  web: # The name of the service that will host the website
+  web:
     build: .
-    image: recipe-website
     container_name: recipe-website-container
     command: gunicorn --bind 0.0.0.0:8000 --workers=3 cookbook.wsgi:application
     volumes:
-      - .:/app # sync the host directory to the working directory
+      - .:/app
       - recipe_static_volume:/app/staticfiles
     depends_on:
       - db
@@ -27,12 +26,14 @@ services:
       - "prod.env"
     networks:
       - recipe_network
+    restart: unless-stopped
 
-  frontend: # The name of the service that will act at the "frontend"
+  frontend:
     image: nginx:alpine
     container_name: recipe-frontend-container
     ports:
-      - "8001:80"
+      - "80:80"
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - recipe_static_volume:/app/staticfiles:ro
@@ -40,12 +41,12 @@ services:
       - recipe_network
     depends_on:
       - web
+    restart: unless-stopped
 
 volumes:
   postgres_data:
   recipe_static_volume:
 
-# Create an isolated network for the containers that are part of this Docker Compose.
 networks:
   recipe_network:
     driver: bridge

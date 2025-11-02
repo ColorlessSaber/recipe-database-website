@@ -48,6 +48,7 @@ and/or create an Ingredient Group that uses different ingredients than the recip
 <p style="text-align:right">(<a href="#readme-top">Back To Top</a>)</p>
 
 # Getting Started
+//TODO update instructions for Docker use
 Download a copy of the repo to your local computer. Next delete the db.sqlite3 and everything inside
 recipes/migrations folder except the \_\_init__.py file. Run the following commands, in the order given, in the terminal 
 to regenerate the sqlite database and the migrations.<br>
