@@ -94,21 +94,21 @@
                                 <a href="{% url 'delete-ingredient-group' recipe_id=recipe.pk ingredient_group_id=ingredient_group.pk %}" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <p class="fw-bold text-decoration-underline text-center">Ingredient Name</p>
+                            </div>
+                            <div class="col">
+                                <p class="fw-bold text-decoration-underline text-center">Amount</p>
+                            </div>
+                            <div class="col">
+                                <p class="fw-bold text-decoration-underline text-center">Measurement</p>
+                            </div>
+                        </div>
                         <ul class="list-group list-group-flush">
                             {% for ingredient in ingredient_group.ingredients.all %}
                             <li class="list-group-item">
                                 <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            <p class="fw-bold text-decoration-underline">Ingredient Name</p>
-                                        </div>
-                                        <div class="col">
-                                            <p class="fw-bold text-decoration-underline">Amount</p>
-                                        </div>
-                                        <div class="col">
-                                            <p class="fw-bold text-decoration-underline">Measurement</p>
-                                        </div>
-                                    </div>
                                     <div class="row">
                                         <div class="col">
                                             {{ingredient.ingredient}}
