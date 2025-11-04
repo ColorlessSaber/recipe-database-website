@@ -150,6 +150,7 @@ def edit_ingredient_group(request, ingredient_group_id, recipe_id):
     return render(request, 'recipes/ingredient-group.html', {
         'ingredient_group_form': ingredient_group_form,
         'ingredient_formset': ingredient_formset,
+        'measurements': Ingredients.MEASUREMENT_CHOICES,
         'recipe': recipe,
         'edit_html': True,
     })
@@ -190,6 +191,7 @@ def new_ingredient_group(request, recipe_id):
     return render(request, 'recipes/ingredient-group.html', {
         'ingredient_group_form': ingredient_group_form,
         'ingredient_formset': ingredient_formset,
+        'measurements': Ingredients.MEASUREMENT_CHOICES,
         'recipe': recipe,
         'edit_html': False,
     })
