@@ -99,50 +99,5 @@
     </form>
 </div>
 <!-- Template for new ingredient -->
-<template id="add-new-ingredient-template">
-    <div class="formset-row" data-form-index="__prefix__">
-        <div class="row">
-            <input type="hidden" name="ingredient_formset-__prefix__-id" id="id_ingredient_formset-__prefix__-id">
-            <input type="hidden" name="ingredient_formset-__prefix__-group-id" id="id_ingredient_formset-__prefix__-group-id">
-            <div class="col-md-3 mb-3">
-                <label class="form-label">Ingredient Name</label>
-                <input type="text" name="ingredient_formset-__prefix__-ingredient" class="form-control" maxlength="255" id="id_ingredient_formset-__prefix__-ingredient">
-            </div>
-            <div class="col-md-3 mb-3">
-                <label class="form-label">Amount</label>
-                <input type="text" name="ingredient_formset-__prefix__-amount" class="form-control"  maxlength="10" id="id_ingredient_formset-__prefix__-amount">
-            </div>
-            <div class="col-md-3 mb-3">
-                <label class="form-label">Measurement</label>
-                <select name="ingredient_formset-__prefix__-measurement" id="id_ingredient_formset-__prefix__-measurement">
-                    <option value selected>---------</option>
-                    {% for value, display in measurements %}
-                    <option value="{{ value }}">{{ display }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-    </div>
-</template>
-<script>
-    let formIndex = parseInt(document.querySelector('#id_ingredient_formset-TOTAL_FORMS').value);
-
-    function addNewIngredient() {
-        const emptyIngredientFormTemplate = document.querySelector('#add-new-ingredient-template');
-        const form = document.querySelector('#ingredients-group');
-
-        if (!emptyIngredientFormTemplate || !form) {
-            console.error("Template or form not found");
-            return;
-        }
-
-        // Create the new ingredient row
-        const template_html = emptyIngredientFormTemplate.innerHTML.replace(/__prefix__/g, formIndex);
-        form.insertAdjacentHTML('beforeend', template_html)
-
-        // Update form count
-        formIndex += 1;
-        document.querySelector('#id_ingredient_formset-TOTAL_FORMS').value = formIndex;
-    }
-</script>
+{% include 'recipes/new-ingredient-template.html' with col="col-md-3" %}
 {% endblock %}
