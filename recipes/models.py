@@ -56,6 +56,7 @@ class Ingredients(models.Model):
         ('g', 'g'),
         ('kg', 'kg'),
         ('can', 'can'),
+        ('qty', 'qty'),
     )
 
     group_ref = models.ForeignKey(IngredientGroup, on_delete=models.CASCADE, related_name='ingredients')
