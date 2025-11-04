@@ -91,24 +91,24 @@
                         <div class="row">
                             <div class="col">
                                 <a href="{% url 'edit-ingredient-group' ingredient_group_id=ingredient_group.pk recipe_id=recipe.pk %}" class="btn btn-warning">Edit</a>
-                                <a href="{% url 'delete-ingredient-group' recipe_id=recipe.pk ingredient_group_id=ingredient_group.pk %}" class="btn btn-danger">Delete</a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ingredientGroupDemoPopUp" data-group_id="{{ingredient_group.pk}}" data-group_name="{{ingredient_group.name}}" onclick="prepPopUp(this)">Delete</button>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <p class="fw-bold text-decoration-underline text-center">Ingredient Name</p>
+                            </div>
+                            <div class="col">
+                                <p class="fw-bold text-decoration-underline text-center">Amount</p>
+                            </div>
+                            <div class="col">
+                                <p class="fw-bold text-decoration-underline text-center">Measurement</p>
                             </div>
                         </div>
                         <ul class="list-group list-group-flush">
                             {% for ingredient in ingredient_group.ingredients.all %}
                             <li class="list-group-item">
                                 <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            <p class="fw-bold text-decoration-underline">Ingredient Name</p>
-                                        </div>
-                                        <div class="col">
-                                            <p class="fw-bold text-decoration-underline">Amount</p>
-                                        </div>
-                                        <div class="col">
-                                            <p class="fw-bold text-decoration-underline">Measurement</p>
-                                        </div>
-                                    </div>
                                     <div class="row">
                                         <div class="col">
                                             {{ingredient.ingredient}}
@@ -150,4 +150,35 @@
         </div>
     </div>
 </div>
+<!-- Ingredient Group Demo Popup -->
+<div class="modal fade" id="ingredientGroupDemoPopUp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ingredientGroupDemoPopUpLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ingredientGroupDemoPopUpLabel">Delete Ingredient Group Conformation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="groupName"></p>
+                <p>All associated ingredients will be deleted; This cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a id="groupUrl" class="btn btn-primary" href="">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function prepPopUp(group_info) {
+        // Add the url link to the ingredient group demo popup delete button
+        let group_id_str = group_info.getAttribute("data-group_id")
+        const group_delete_button = document.getElementById("groupUrl")
+        group_delete_button.href = "/recipe/{{recipe.pk}}/" + group_id_str + "/delete"
+
+        // add in the name of the Ingredient Group the user clicked they wished to delete
+        let group_name_str = group_info.getAttribute("data-group_name")
+        document.getElementById("groupName").textContent = "Are you sure you want to delete this Ingredient Group (" + group_name_str + ")?"
+    }
+</script>
 {% endblock %}
