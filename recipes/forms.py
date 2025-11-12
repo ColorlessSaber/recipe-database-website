@@ -10,8 +10,9 @@ class RecipesForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'category': forms.Select(choices=Recipes.CATEGORY_CHOICES),
-            'time_min': forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}),
-            'time_max': forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}),
+            'cook_time_min': forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}),
+            'cook_time_max': forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}),
+            'prep_time': forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}),
             'serving': forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}),
             'instructions': forms.Textarea(attrs={'class': 'form-control'}),
             'notes': forms.Textarea(attrs={'class': 'form-control'}),
@@ -28,9 +29,9 @@ class IngredientGroupForm(forms.ModelForm):
 class IngredientsForm(forms.ModelForm):
     class Meta:
         model = Ingredients
-        fields = ['ingredient', 'amount', 'measurement']
+        fields = ['name', 'amount', 'measurement']
         widgets = {
-            'ingredient': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
             'amount': forms.TextInput(attrs={'class': 'form-control'}),
             'measurement': forms.Select(choices=Ingredients.MEASUREMENT_CHOICES),
         }
