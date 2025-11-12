@@ -48,12 +48,16 @@
             {{recipe.category}}
         </div>
         <div class="mb-3 px-5">
-            <p class="fw-bold text-decoration-underline">Time Min (mins):</p>
-            {{recipe.time_min}}
+            <p class="fw-bold text-decoration-underline">Cook Time Max (mins):</p>
+            {{recipe.cook_time_max}}
         </div>
         <div class="mb-3 px-5">
-            <p class="fw-bold text-decoration-underline">Time Max (mins):</p>
-            {{recipe.time_max}}
+            <p class="fw-bold text-decoration-underline">Cook Time Min (mins):</p>
+            {{recipe.cook_time_min}}
+        </div>
+        <div class="mb-3 px-5">
+            <p class="fw-bold text-decoration-underline">Prep Time (mins):</p>
+            {{recipe.prep_time}}
         </div>
         <div class="mb-3 px-5">
             <p class="fw-bold text-decoration-underline">Servings:</p>
@@ -111,7 +115,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col">
-                                            {{ingredient.ingredient}}
+                                            {{ingredient.name}}
                                         </div>
                                         <div class="col">
                                             {{ingredient.amount}}
