@@ -44,31 +44,35 @@
         <!-- Recipe form -->
         <div class="container">
             <div class="mb-3 px-5">
-                {{ recipe_form.name.label_tag }}
+                <label>Name:</label>
                 {{ recipe_form.name }}
             </div>
             <div class="mb-3 px-5">
-                {{ recipe_form.category.label_tag }}
+                <label>Category:</label>
                 {{ recipe_form.category }}
             </div>
             <div class="mb-3 px-5">
-                {{ recipe_form.time_min.label_tag }}
-                {{ recipe_form.time_min }}
+                <label>Cook Time Max (mins):</label>
+                {{ recipe_form.cook_time_max }}
             </div>
             <div class="mb-3 px-5">
-                {{ recipe_form.time_max.label_tag }}
-                {{ recipe_form.time_max }}
+                <label>Cook Time Min (mins):</label>
+                {{ recipe_form.cook_time_min }}
             </div>
             <div class="mb-3 px-5">
-                {{ recipe_form.servings.label_tag }}
+                <label>Prep Time (mins):</label>
+                {{ recipe_form.prep_time }}
+            </div>
+            <div class="mb-3 px-5">
+                <label>Servings:</label>
                 {{ recipe_form.servings }}
             </div>
             <div class="mb-3 px-5">
-                {{ recipe_form.instructions.label_tag }}
+                <label>Instructions:</label>
                 {{ recipe_form.instructions }}
             </div>
             <div class="mb-3 px-5">
-                {{ recipe_form.notes.label_tag }}
+                <label>Notes:</label>
                 {{ recipe_form.notes }}
             </div>
         </div>

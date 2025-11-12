@@ -45,7 +45,7 @@
                     <th scope="col">Recipe Name</th>
                     <th scope="col">Category</th>
                     <th scope="col">Servings</th>
-                    <th scope="col">Max Time (mins)</th>
+                    <th scope="col">Max Cook Time (mins)</th>
                     <th scope="col">Open Recipe</th>
                 </tr>
             </thead>
@@ -55,7 +55,7 @@
                     <td>{{ recipe.name }}</td>
                     <td>{{ recipe.category }}</td>
                     <td>{{ recipe.servings }}</td>
-                    <td>{{ recipe.time_max }}</td>
+                    <td>{{ recipe.cook_time_max }}</td>
                     <td><a href="{% url 'recipe-details' recipe_id=recipe.pk %}"><button type="button" class="btn btn-secondary">Open</button></a></td>
                 </tr>
                 {% endfor %}
