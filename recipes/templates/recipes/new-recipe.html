@@ -80,7 +80,7 @@
         <div class="container">
             <h4 class="border-top mb-3">
                 Ingredient Group Name
-                <button type="button" class="btn btn-secondary btn-sm" style="border-radius: 75%; --bs-btn-padding-y: .20rem; --bs-btn-padding-x: .25rem;">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#ingredientGroupDetailPopUp" style="border-radius: 75%; --bs-btn-padding-y: .20rem; --bs-btn-padding-x: .25rem;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="bi bi-question" viewBox="0 0 16 16">
                         <path fill="currentColor" d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/>
                     </svg>
@@ -130,6 +130,31 @@
         <button type="submit" class="btn btn-primary">Submit</button>
         <a href="{% url 'recipes-home' %}" class="btn btn-secondary">Cancel</a>
     </form>
+</div>
+<!-- Ingredient Group Detail Popup -->
+<div class="modal fade" id="ingredientGroupDetailPopUp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ingredientGroupDetailPopUpLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ingredientGroupDetailPopUpLabel">What is an Ingredient Group?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    An Ingredient Group is a way to have different variations of a recipe. Example,
+                    one variation that has gluten and another that is gluten-free.
+                    <br><br>
+                    They also allow the ability to organize the ingredients of a recipe into groups to help
+                    identify which ingredients are for the main dish versus the ones used to make the dressing, frosting, etc.
+                    <br><br>
+                    You will be able to create a new Ingredient Group(s) after saving the recipe and opening it in the "cookbook" tab.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Template for new ingredient -->
 {% include 'recipes/new-ingredient-template.html' with col="col-md-4" %}
