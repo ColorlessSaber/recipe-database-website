@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.response import TemplateResponse
+from django.views import View
 from django.contrib import messages
 from django.db import transaction
 from .forms import RecipesForm, IngredientsFormSet,  IngredientGroupForm
@@ -55,6 +57,29 @@ def new_recipe(request):
         'ingredient_formset': ingredient_formset,
         'measurements': Ingredients.MEASUREMENT_CHOICES,
     })
+
+class CookbookView(View):
+    """
+    Opens the webpage showing everything in the cookbook--IE, all the recipes that
+    are saved in the database.
+    """
+    def _list_of_categories(self):
+        return {'list_of_categories': Recipes.CATEGORY_CHOICES}
+
+    def get(self, request):
+        recipes = Recipes.objects.all().order_by("name")
+        context = self._list_of_categories() | {'recipes': recipes}
+        return TemplateResponse(request, 'recipes/cookbook.html', context)
+
+    def post(self, request):
+        list_of_categories = Recipes.CATEGORY_CHOICES
+        if request.POST.get("filter") != "all":
+            recipes = Recipes.objects.filter(category=request.POST.get("filter")).order_by("name")
+        else:
+            recipes = Recipes.objects.all().order_by("name")
+
+        context = self._list_of_categories() | {'recipes': recipes}
+        return TemplateResponse(request, 'recipes/cookbook.html', context)
 
 def cookbook(request):
     """

@@ -7,7 +7,7 @@ from django.urls import path
 urlpatterns = [
     path('', views.home, name='recipes-home'),
     path('new-recipe/', views.new_recipe, name='new-recipe'),
-    path('cookbook/', views.cookbook, name='cookbook'),
+    path('cookbook/', views.CookbookView.as_view(), name='cookbook'),
     path('recipe/<int:recipe_id>/details', views.recipe_details, name='recipe-details'),
     path('recipe/<int:recipe_id>/edit/', views.edit_recipe, name='edit-recipe'),
     path('recipe/<int:recipe_id>/new-ingredient-group/', views.new_ingredient_group, name='new-ingredient-group'),
