@@ -17,14 +17,23 @@ def home(request):
     """
     return render(request, 'recipes/recipes-home.html')
 
-def new_recipe(request):
+class NewRecipeView(View):
     """
-    Creates a new recipe.
+    Opens the webpage to allow user to create a new recipe.
+    """
 
-    :param request:
-    :return:
-    """
-    if request.method == "POST":
+    def get(self, request):
+        recipe_form = RecipesForm(prefix="recipe_form")
+        ingredient_group_form = IngredientGroupForm(prefix="ingredient_group_form")
+        ingredient_formset = IngredientsFormSet(prefix="ingredient_formset")
+        return TemplateResponse(request, 'recipes/new-recipe.html', {
+            'recipe_form': recipe_form,
+            'ingredient_group_form': ingredient_group_form,
+            'ingredient_formset': ingredient_formset,
+            'measurements': Ingredients.MEASUREMENT_CHOICES,
+        })
+
+    def post(self, request):
         recipe_form = RecipesForm(request.POST, prefix="recipe_form")
         ingredient_group_form = IngredientGroupForm(request.POST, prefix="ingredient_group_form")
         ingredient_formset = IngredientsFormSet(request.POST, prefix="ingredient_formset")
@@ -46,23 +55,20 @@ def new_recipe(request):
                 messages.error(request, f'There was an error when saving recipe: {e}')
         else:
             messages.error(request, 'Invalid form was submitted. Please try again.')
-    else:
-        recipe_form = RecipesForm(prefix="recipe_form")
-        ingredient_group_form = IngredientGroupForm(prefix="ingredient_group_form")
-        ingredient_formset = IngredientsFormSet(prefix="ingredient_formset")
 
-    return render(request, 'recipes/new-recipe.html', {
-        'recipe_form': recipe_form,
-        'ingredient_group_form': ingredient_group_form,
-        'ingredient_formset': ingredient_formset,
-        'measurements': Ingredients.MEASUREMENT_CHOICES,
-    })
+        return TemplateResponse(request, 'recipes/new-recipe.html', {
+            'recipe_form': recipe_form,
+            'ingredient_group_form': ingredient_group_form,
+            'ingredient_formset': ingredient_formset,
+            'measurements': Ingredients.MEASUREMENT_CHOICES,
+        })
 
 class CookbookView(View):
     """
     Opens the webpage showing everything in the cookbook--IE, all the recipes that
     are saved in the database.
     """
+
     def _list_of_categories(self):
         return {'list_of_categories': Recipes.CATEGORY_CHOICES}
 
@@ -80,29 +86,6 @@ class CookbookView(View):
 
         context = self._list_of_categories() | {'recipes': recipes}
         return TemplateResponse(request, 'recipes/cookbook.html', context)
-
-def cookbook(request):
-    """
-    Opens the webpage showing everything in the cookbook--IE, all the recipes that
-    are saved in the database.
-
-    :param request:
-    :return:
-    """
-    list_of_categories = Recipes.CATEGORY_CHOICES
-
-    if request.method == "POST":
-        if request.POST.get("filter") != "all":
-            recipes = Recipes.objects.filter(category=request.POST.get("filter")).order_by("name")
-        else:
-            recipes = Recipes.objects.all().order_by("name")
-    else:
-        recipes = Recipes.objects.all().order_by("name")
-
-    return render(request, 'recipes/cookbook.html', {
-        'list_of_categories': list_of_categories,
-        'recipes': recipes,
-    })
 
 def recipe_details(request, recipe_id):
     """
