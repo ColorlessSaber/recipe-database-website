@@ -101,6 +101,35 @@ def recipe_details(request, recipe_id):
         'recipe': recipe,
     })
 
+class EditRecipeView(View):
+    """
+    Opens webpage to allow user to edit the selected recipe.
+    """
+
+    def get(self, request, recipe_id):
+        recipe = get_object_or_404(Recipes, id=recipe_id)
+        recipe_form = RecipesForm(instance=recipe, prefix="recipe_form")
+        return TemplateResponse(request, 'recipes/edit-recipe.html', {
+            'recipe': recipe,
+            'recipe_form': recipe_form,
+        })
+
+    def post(self, request, recipe_id):
+        recipe = get_object_or_404(Recipes, id=recipe_id)
+        recipe_form = RecipesForm(request.POST, prefix="recipe_form", instance=recipe)
+
+        if recipe_form.is_valid():
+            recipe = recipe_form.save()
+            messages.success(request, f'Recipe "{recipe.name}" has been successfully saved!')
+            return redirect('recipe-details', recipe_id=recipe_id)
+        else:
+            messages.error(request, 'Invalid form was submitted. Please try again.')
+
+        return TemplateResponse(request, 'recipes/edit-recipe.html', {
+            'recipe': recipe,
+            'recipe_form': recipe_form,
+        })
+
 def edit_recipe(request, recipe_id):
     """
     Opens webpage to allow user to edit the selected recipe.
