@@ -10,8 +10,8 @@ urlpatterns = [
     path('cookbook/', views.CookbookView.as_view(), name='cookbook'),
     path('recipe/<int:recipe_id>/details', views.recipe_details, name='recipe-details'),
     path('recipe/<int:recipe_id>/edit/', views.EditRecipeView.as_view(), name='edit-recipe'),
-    path('recipe/<int:recipe_id>/new-ingredient-group/', views.new_ingredient_group, name='new-ingredient-group'),
-    path('recipe/<int:recipe_id>/<int:ingredient_group_id>/edit/', views.edit_ingredient_group, name='edit-ingredient-group'),
+    path('recipe/<int:recipe_id>/new-ingredient-group/', views.NewIngredientGroupView.as_view(), name='new-ingredient-group'),
+    path('recipe/<int:recipe_id>/<int:ingredient_group_id>/edit/', views.EditIngredientGroupView.as_view(), name='edit-ingredient-group'),
     path('recipe/<int:recipe_id>/delete/', views.delete_recipe, name='delete-recipe'),
     path('recipe/<int:recipe_id>/<int:ingredient_group_id>/delete/', views.delete_ingredient_group, name='delete-ingredient-group'),
 ]
